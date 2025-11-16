@@ -1,0 +1,304 @@
+=================================================================================
+SPARK PLATFORM - XAMPP FIXES (Copy & Paste Instructions)
+=================================================================================
+
+Apply these fixes in order to fix all errors in your XAMPP installation.
+
+=================================================================================
+FIX 1: includes/config.php (Line 100-102)
+=================================================================================
+
+FIND THIS CODE (around line 100):
+-----------------------------------
+// Sanitize input
+function sanitize($input) {
+    return htmlspecialchars(trim($input), ENT_QUOTES, 'UTF-8');
+}
+
+REPLACE WITH:
+-----------------------------------
+// Sanitize input
+function sanitize($input) {
+    return htmlspecialchars(trim($input ?? ''), ENT_QUOTES, 'UTF-8');
+}
+
+
+=================================================================================
+FIX 2: student/events.php (After line 11)
+=================================================================================
+
+FIND THIS CODE (around line 3-11):
+-----------------------------------
+if (!function_exists('generateToken')) {
+    require_once __DIR__ . '/../includes/config.php';
+}
+if (!function_exists('getPDO')) {
+    require_once __DIR__ . '/../includes/database.php';
+}
+if (!function_exists('sendEmail')) {
+    require_once __DIR__ . '/../includes/functions.php';
+}
+
+REPLACE WITH:
+-----------------------------------
+if (!function_exists('generateToken')) {
+    require_once __DIR__ . '/../includes/config.php';
+}
+if (!function_exists('getPDO')) {
+    require_once __DIR__ . '/../includes/database.php';
+}
+if (!function_exists('sendEmail')) {
+    require_once __DIR__ . '/../includes/functions.php';
+}
+if (!function_exists('getCurrentUser')) {
+    require_once __DIR__ . '/../includes/auth.php';
+}
+
+
+=================================================================================
+FIX 3: student/research.php (After line 11)
+=================================================================================
+
+FIND THIS CODE (around line 3-11):
+-----------------------------------
+if (!function_exists('generateToken')) {
+    require_once __DIR__ . '/../includes/config.php';
+}
+if (!function_exists('getPDO')) {
+    require_once __DIR__ . '/../includes/database.php';
+}
+if (!function_exists('sendEmail')) {
+    require_once __DIR__ . '/../includes/functions.php';
+}
+
+REPLACE WITH:
+-----------------------------------
+if (!function_exists('generateToken')) {
+    require_once __DIR__ . '/../includes/config.php';
+}
+if (!function_exists('getPDO')) {
+    require_once __DIR__ . '/../includes/database.php';
+}
+if (!function_exists('sendEmail')) {
+    require_once __DIR__ . '/../includes/functions.php';
+}
+if (!function_exists('getCurrentUser')) {
+    require_once __DIR__ . '/../includes/auth.php';
+}
+
+
+=================================================================================
+FIX 4: student/opportunities.php (After line 11)
+=================================================================================
+
+FIND THIS CODE (around line 3-11):
+-----------------------------------
+if (!function_exists('generateToken')) {
+    require_once __DIR__ . '/../includes/config.php';
+}
+if (!function_exists('getPDO')) {
+    require_once __DIR__ . '/../includes/database.php';
+}
+if (!function_exists('sendEmail')) {
+    require_once __DIR__ . '/../includes/functions.php';
+}
+
+REPLACE WITH:
+-----------------------------------
+if (!function_exists('generateToken')) {
+    require_once __DIR__ . '/../includes/config.php';
+}
+if (!function_exists('getPDO')) {
+    require_once __DIR__ . '/../includes/database.php';
+}
+if (!function_exists('sendEmail')) {
+    require_once __DIR__ . '/../includes/functions.php';
+}
+if (!function_exists('getCurrentUser')) {
+    require_once __DIR__ . '/../includes/auth.php';
+}
+
+
+=================================================================================
+FIX 5: student/certificates.php (After line 11)
+=================================================================================
+
+FIND THIS CODE (around line 3-11):
+-----------------------------------
+if (!function_exists('generateToken')) {
+    require_once __DIR__ . '/../includes/config.php';
+}
+if (!function_exists('getPDO')) {
+    require_once __DIR__ . '/../includes/database.php';
+}
+if (!function_exists('sendEmail')) {
+    require_once __DIR__ . '/../includes/functions.php';
+}
+
+REPLACE WITH:
+-----------------------------------
+if (!function_exists('generateToken')) {
+    require_once __DIR__ . '/../includes/config.php';
+}
+if (!function_exists('getPDO')) {
+    require_once __DIR__ . '/../includes/database.php';
+}
+if (!function_exists('sendEmail')) {
+    require_once __DIR__ . '/../includes/functions.php';
+}
+if (!function_exists('getCurrentUser')) {
+    require_once __DIR__ . '/../includes/auth.php';
+}
+
+
+=================================================================================
+FIX 6: admin/index.php (After line 5)
+=================================================================================
+
+FIND THIS CODE (around line 3-5):
+-----------------------------------
+require_once __DIR__ . '/../includes/config.php';
+require_once __DIR__ . '/../includes/database.php';
+require_once __DIR__ . '/../includes/functions.php';
+
+REPLACE WITH:
+-----------------------------------
+require_once __DIR__ . '/../includes/config.php';
+require_once __DIR__ . '/../includes/database.php';
+require_once __DIR__ . '/../includes/functions.php';
+require_once __DIR__ . '/../includes/auth.php';
+
+
+=================================================================================
+FIX 7: DATABASE FIXES - Run in phpMyAdmin
+=================================================================================
+
+1. Open phpMyAdmin: http://localhost/phpmyadmin
+2. Click on "spark_platform" database
+3. Click "SQL" tab
+4. Copy and paste this ENTIRE SQL code below:
+
+-----------------------------------
+USE spark_platform;
+
+-- Add missing columns to research_projects
+ALTER TABLE research_projects ADD COLUMN is_active TINYINT(1) DEFAULT 1 AFTER status;
+ALTER TABLE research_projects ADD COLUMN is_featured TINYINT(1) DEFAULT 0 AFTER is_active;
+ALTER TABLE research_projects ADD COLUMN end_date DATE DEFAULT NULL AFTER updated_at;
+
+-- Add indexes
+ALTER TABLE research_projects ADD INDEX idx_is_active (is_active);
+ALTER TABLE research_projects ADD INDEX idx_is_featured (is_featured);
+ALTER TABLE research_projects ADD INDEX idx_end_date (end_date);
+
+-- Add missing column to opportunities
+ALTER TABLE opportunities ADD COLUMN is_active TINYINT(1) DEFAULT 1 AFTER is_featured;
+ALTER TABLE opportunities ADD INDEX idx_is_active_opp (is_active);
+
+-- Update existing records
+UPDATE research_projects SET is_active = 1 WHERE is_active IS NULL;
+UPDATE opportunities SET is_active = 1 WHERE is_active IS NULL;
+
+SELECT 'Database fixes completed successfully!' AS Result;
+-----------------------------------
+
+5. Click "Go" button
+6. You should see "Database fixes completed successfully!"
+
+
+=================================================================================
+VERIFICATION CHECKLIST
+=================================================================================
+
+After applying all fixes above:
+
+[ ] Fixed includes/config.php (trim function)
+[ ] Fixed student/events.php (added auth.php)
+[ ] Fixed student/research.php (added auth.php)
+[ ] Fixed student/opportunities.php (added auth.php)
+[ ] Fixed student/certificates.php (added auth.php)
+[ ] Fixed admin/index.php (added auth.php)
+[ ] Ran database SQL fixes in phpMyAdmin
+[ ] Restarted Apache in XAMPP (optional but recommended)
+
+=================================================================================
+TEST YOUR PAGES
+=================================================================================
+
+Visit these URLs in your browser (WITHOUT logging in):
+
+✓ Home Page:
+  http://localhost/spark/student/
+
+✓ Events (public view):
+  http://localhost/spark/student/events.php
+
+✓ Research (public view):
+  http://localhost/spark/student/research.php
+
+✓ Opportunities (public view):
+  http://localhost/spark/student/opportunities.php
+
+✓ Gallery (public view):
+  http://localhost/spark/student/gallery.php
+
+✓ Contact (public view):
+  http://localhost/spark/student/contact.php
+
+✓ Team (public view):
+  http://localhost/spark/student/team.php
+
+All these pages should now work WITHOUT login!
+
+Pages that REQUIRE login:
+- Dashboard: http://localhost/spark/student/dashboard.php
+- Profile: http://localhost/spark/student/profile.php
+- Certificates: http://localhost/spark/student/certificates.php
+- Calendar: http://localhost/spark/student/calendar.php
+- Attendance: http://localhost/spark/student/attendance.php
+
+=================================================================================
+WHAT EACH PAGE DOES
+=================================================================================
+
+PUBLIC PAGES (No login required):
+  ✓ Home - Main landing page
+  ✓ Events - View all events (login required to register)
+  ✓ Research - View research projects (login required to join)
+  ✓ Opportunities - View opportunities (login required to apply)
+  ✓ Gallery - View photo gallery
+  ✓ Contact - Send contact messages
+  ✓ Team - View team members
+
+PROTECTED PAGES (Login required):
+  🔒 Dashboard - Personal student dashboard
+  🔒 Profile - Edit profile
+  🔒 Certificates - View earned certificates
+  🔒 Calendar - Event calendar
+  🔒 Attendance - Mark attendance
+
+=================================================================================
+TROUBLESHOOTING
+=================================================================================
+
+If you still see "Loading SPARK..." after all fixes:
+
+1. Clear browser cache (Ctrl + Shift + Delete)
+2. Hard refresh the page (Ctrl + F5)
+3. Check browser console for errors (Press F12)
+4. Verify database connection in includes/config.php:
+   - DB_HOST = 'localhost'
+   - DB_NAME = 'spark_platform'
+   - DB_USER = 'root'
+   - DB_PASS = '' (empty for default XAMPP)
+5. Verify SITE_URL in includes/config.php:
+   - Should be: http://localhost/spark
+
+If pages show blank or errors:
+1. Check XAMPP Apache error logs
+2. Make sure all 7 fixes above are applied
+3. Restart Apache and MySQL in XAMPP
+
+=================================================================================
+END OF FIXES
+=================================================================================

@@ -1,0 +1,36 @@
+{
+    "name": "spark/platform",
+    "description": "SPARK - Sanjivani Platform for AI, Research & Knowledge",
+    "type": "project",
+    "license": "MIT",
+    "require": {
+        "php": "^8.0",
+        "ext-curl": "*",
+        "ext-json": "*",
+        "ext-mbstring": "*",
+        "ext-gd": "*",
+        "ext-pdo": "*",
+        "ext-pdo_mysql": "*",
+        "mailjet/mailjet-apiv3-php": "^1.5",
+        "razorpay/razorpay": "^2.9",
+        "endroid/qr-code": "^4.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Spark\\": ["includes/"]
+        }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.0",
+        "phpmd/phpmd": "^2.10"
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "config": {
+        "optimize-autoloader": true,
+        "sort-packages": true,
+        "allow-plugins": {
+            "php-http/disallow": true
+        }
+    }
+}

@@ -1,0 +1,31 @@
+/spark/student/events.php
+Fatal error: Uncaught Error: Call to undefined function getCurrentUser() in C:\xampp\htdocs\spark\student\events.php:16 Stack trace: #0 {main} thrown in C:\xampp\htdocs\spark\student\events.php on line 16
+
+/spark/student/research.php
+Warning: Undefined array key "tech_stack" in C:\xampp\htdocs\spark\student\research.php on line 15
+
+Deprecated: trim(): Passing null to parameter #1 ($string) of type string is deprecated in C:\xampp\htdocs\spark\includes\config.php on line 101
+
+Warning: Undefined array key "status" in C:\xampp\htdocs\spark\student\research.php on line 16
+
+Deprecated: trim(): Passing null to parameter #1 ($string) of type string is deprecated in C:\xampp\htdocs\spark\includes\config.php on line 101
+
+Fatal error: Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'rp.is_active' in 'where clause' in C:\xampp\htdocs\spark\includes\database.php:44 Stack trace: #0 C:\xampp\htdocs\spark\includes\database.php(44): PDO->prepare('SELECT COUNT(*)...') #1 C:\xampp\htdocs\spark\includes\database.php(56): dbQuery('SELECT COUNT(*)...', Array) #2 C:\xampp\htdocs\spark\student\research.php(48): dbFetch('SELECT COUNT(*)...', Array) #3 {main} thrown in C:\xampp\htdocs\spark\includes\database.php on line 44
+
+/spark/student/opportunities.php
+Fatal error: Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'o.is_active' in 'where clause' in C:\xampp\htdocs\spark\includes\database.php:44 Stack trace: #0 C:\xampp\htdocs\spark\includes\database.php(44): PDO->prepare('SELECT COUNT(*)...') #1 C:\xampp\htdocs\spark\includes\database.php(56): dbQuery('SELECT COUNT(*)...', Array) #2 C:\xampp\htdocs\spark\student\opportunities.php(55): dbFetch('SELECT COUNT(*)...', Array) #3 {main} thrown in C:\xampp\htdocs\spark\includes\database.php on line 44
+
+
+/spark/student/certificates.php
+Fatal error: Uncaught Error: Call to undefined function getCurrentUser() in C:\xampp\htdocs\spark\student\certificates.php:17 Stack trace: #0 {main} thrown in C:\xampp\htdocs\spark\student\certificates.php on line 17
+
+/spark/admin/index.php
+Fatal error: Uncaught Error: Call to undefined function getCurrentUser() in C:\xampp\htdocs\spark\admin\index.php:11 Stack trace: #0 {main} thrown in C:\xampp\htdocs\spark\admin\index.php on line 11
+
+and 
+/spark/student/dashboard.php
+/spark/student/team.php
+/spark/student/gallery.php
+/spark/student/contact.php 
+/spark/student/calendar.php , this pages display only (Loading SPARK...)
+
